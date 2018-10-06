@@ -3,14 +3,14 @@
  * gitee : https://gitee.com/monksoul/LayX
  * github : https://github.com/MonkSoul/Layx/
  * author : 百小僧/MonkSoul
- * version : v2.4.9
+ * version : v2.5.2
  * create time : 2018.05.11
- * update time : 2018.07.17
+ * update time : 2018.09.22
  */
 ;
 !(function (over, win, slf) {
     var Layx = {
-        version: '2.4.9',
+        version: '2.5.2',
         defaults: {
             id: '',
             icon: true,
@@ -263,11 +263,11 @@
             _minHeight = Utils.compileLayxWidthOrHeight("height", config.minHeight, that.defaults.minHeight);
             _width = Utils.compileLayxWidthOrHeight("width", config.width, that.defaults.width);
             _height = Utils.compileLayxWidthOrHeight("height", config.height, that.defaults.height);
+            _width = Math.max(_width, _minWidth);
+            _height = Math.max(_height, _minHeight);
             var _position = Utils.compileLayxPosition(_width, _height, config.position);
             _top = _position.top;
             _left = _position.left;
-            _width = Math.max(_width, _minWidth);
-            _height = Math.max(_height, _minHeight);
             _top = Math.max(_top, 0);
             _top = Math.min(win.innerHeight - 15, _top);
             _left = Math.max(_left, -(_width - 15));
@@ -1129,6 +1129,7 @@
                         iframe.setAttribute("data-focus", "true");
                     }
                 }
+                var iframeTitle = config.title;
                 if (type === "group") {
                     if (frameConfig.useFrameTitle === true) {
                         iframeTitle = iframe.contentWindow.document.querySelector("title").innerText;
@@ -1230,7 +1231,6 @@
             iframe.setAttribute("mozallowfullscreen", "");
             iframe.setAttribute("webkitallowfullscreen", "");
             iframe.src = isLoad !== false ? ((type === "group" ? frameConfig.url : config.url) || 'about:blank') : 'about:blank';
-            var iframeTitle = config.title;
             if (iframe.attachEvent) {
                 iframe.attachEvent("onreadystatechange", function () {
                     if (iframe.readyState === "complete" || iframe.readyState == "loaded") {
@@ -1940,6 +1940,29 @@
                 }
                 layxWindow.style.left = _position.left + "px";
                 layxWindow.style.top = _position.top + "px";
+            }
+        },
+        setSize: function (id, area) {
+            var that = this,
+                windowId = "layx-" + id,
+                layxWindow = document.getElementById(windowId),
+                winform = that.windows[id];
+            if (layxWindow && winform) {
+                if (area) {
+                    if (area["width"]) {
+                        var _width = Utils.compileLayxWidthOrHeight("width", area["width"], that.defaults.width);
+                        winform.area.width = _width;
+                        layxWindow.style.width = _width + "px";
+                    }
+                    if (area["height"]) {
+                        var _height = Utils.compileLayxWidthOrHeight("height", area["height"], that.defaults.height);
+                        winform.area.height = _height;
+                        layxWindow.style.height = _height + "px";
+                    }
+                    if (winform.storeStatus === true) {
+                        that.storeWindowAreaInfo(id, winform.area);
+                    }
+                }
             }
         },
         getFrameContext: function (id) {
@@ -3437,6 +3460,9 @@
         },
         getButton: function (id, buttonId) {
             return Layx.getButton(id, buttonId);
+        },
+        setSize: function (id, area) {
+            Layx.setSize(id, area);
         }
     };
     win.document.addEventListener("keydown", function (event) {

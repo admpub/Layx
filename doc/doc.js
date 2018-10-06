@@ -101,7 +101,7 @@ window.onload = function () {
 
              <div id="about-layx">
                 <h2>序言</h2>
-                <p>Layx 企业级弹窗组件。</p>
+                <p>Layx 下一代Web弹窗组件。</p>
                 <p>gzip压缩版仅 <label>13.5kb</label>，非常小巧。</p>
                 <h2>项目</h2>
                 <ul>
@@ -116,8 +116,8 @@ window.onload = function () {
                 <ul>
                     <li><label>原创作者</label>：百小僧</li>
                     <li><label>开源协议</label>：MIT</li>
-                    <li><label>当前版本</label>：<strong>v2.4.9</strong></li>
-                    <li><label>发布日期</label>：2018.07.17</li>
+                    <li><label>当前版本</label>：<strong>v2.5.2</strong></li>
+                    <li><label>发布日期</label>：2018.09.22</li>
                     <li><label>交流Q群</label>：<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=60a832c9b6d9e7e56a0057fa341270fe52472e8390f9a8ec5985e47c319a166e">18863883</a></li>
                     <li><label>版权所有</label>：百签软件（中山）有限公司</li>
                 </ul>
@@ -160,6 +160,12 @@ window.onload = function () {
             title: '文档',
             type: 'url',
             url: './doc.html'
+        },
+        {
+            id: 'help',
+            title: '<span style="color:#f00;font-weight:600!important;">常见问题</span>',
+            type: 'url',
+            url: './help.html'
         }], 0, {
                 mergeTitle: false,
                 title: 'Layx v' + layx.v,
@@ -262,6 +268,16 @@ window.onload = function () {
                             layx.destroyInlay("float-log");
                             layx.html('log', 'Layx 更新日志 v' + layx.v, layx.multiLine(function () {/* 
 <div style="padding:0 10px 10px 10px">
+<h3># 2018.09.22 v2.5.2 发布</h3>
+<pre style="margin-top:0">
+- [修复] useFrameTitle:true bug，感谢 <a href="https://github.com/MonkSoul/Layx/pull/7" target="_blank">#7</a>
+- [修复] 窗口百分比居中bug，感谢 QQ：1034937343
+</pre>
+<h3># 2018.09.17 v2.5.0 发布</h3>
+<pre style="margin-top:0">
+- [新增] layx.setSize(id,area) 方法，可以动态设置窗口宽度、高度
+- [新增] 【常见问题】栏目
+</pre>
 <h3># 2018.07.17 v2.4.9 发布</h3>
 <pre style="margin-top:0">
 - [新增] options.existFlicker参数，可以配置是否开启窗口存在闪烁
@@ -553,28 +569,22 @@ window.onload = function () {
                 ]
             });
 
-        layx.tip('Layx 企业级弹窗组件.', document.getElementById('tip-top'), 'top');
-        layx.tip('Layx 企业级弹窗组件.', document.getElementById('tip-bottom'), 'bottom');
-        layx.tip('Layx 企业级弹窗组件.', document.getElementById('tip-left'), 'left');
-        layx.tip('Layx 企业级弹窗组件.', document.getElementById('tip-right'), 'right');
+        layx.tip('Layx 下一代Web弹窗组件.', document.getElementById('tip-top'), 'top');
+        layx.tip('Layx 下一代Web弹窗组件.', document.getElementById('tip-bottom'), 'bottom');
+        layx.tip('Layx 下一代Web弹窗组件.', document.getElementById('tip-left'), 'left');
+        layx.tip('Layx 下一代Web弹窗组件.', document.getElementById('tip-right'), 'right');
 
         var logBtn = layx.getButton("layx", "log");
         var winform = layx.html('float-log', 'Layx v' + layx.v + " 更新日志", layx.multiLine(function () {/* 
 <div style="padding:10px">
 <pre style="margin-top:0;margin-bottom: 0;">
-- [新增] options.existFlicker参数，可以配置是否开启窗口存在闪烁
-- [新增] options.enableDomainFocus参数，设置是否支持跨域点击，默认为true，建议设置为false
-- [新增] 强制关闭窗口方法：layx.destroy(id,params,force)，设置force为true表示强制关闭
-- [更新] 代码优化
-- [修复] alert窗口滚动条 bug
-- [修复] 自动获取iframe标题 bug
-- [修复] iframe窗口焦点事件 bug
-- [修复] 合并窗口组样式 bug
+- [修复] useFrameTitle:true bug，感谢 <a href="https://github.com/MonkSoul/Layx/pull/7" target="_blank">#7</a>
+- [修复] 窗口百分比居中bug，感谢 QQ：1034937343
 </pre>
 */ }), {
                 floatTarget: logBtn,
                 width: 320,
-                height: 250,
+                height: 150,
                 minHeight: 110,
                 alwaysOnTop: true,
                 floatDirection: 'top',
