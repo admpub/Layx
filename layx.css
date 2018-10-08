@@ -881,6 +881,7 @@ body.ilayx-body {
 }
 /*cloud 皮肤*/
 .layx-window.layx-skin-cloud {
+    border: 1px solid #bbb;
 }
 
 .layx-window.layx-skin-cloud .layx-control-bar {
@@ -927,6 +928,7 @@ body.ilayx-body {
 }
 /*river 皮肤*/
 .layx-window.layx-skin-river {
+    border: 1px solid #3498db;
 }
 
 .layx-window.layx-skin-river .layx-control-bar {
@@ -950,7 +952,7 @@ body.ilayx-body {
 }
 
 /*asphalt 皮肤*/
-.layx-window.layx-asphalt-river {
+.layx-window.layx-skin-asphalt {
 }
 
 .layx-window.layx-skin-asphalt .layx-control-bar {
