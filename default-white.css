@@ -1,0 +1,22 @@
+/* default-skin:cloud */
+.layx-window.layx-skin-default {
+    border: 1px solid white;
+}
+
+.layx-window.layx-skin-default .layx-control-bar {
+    background-color: white;
+}
+
+.layx-window.layx-skin-default .layx-inlay-menus .layx-icon:hover {
+    background-color: white;
+}
+
+.layx-window.layx-skin-default .layx-button-item {
+    background-color: white;
+    border: 1px solid white;
+}
+
+.layx-window.layx-skin-default .layx-button-item:hover {
+    background-color: white;
+    border: 1px solid #ccc;
+}
