@@ -3,14 +3,14 @@
  * gitee : https://gitee.com/monksoul/LayX
  * github : https://github.com/MonkSoul/Layx/
  * author : 百小僧/MonkSoul
- * version : v2.5.2
+ * version : v2.5.4
  * create time : 2018.05.11
- * update time : 2018.09.22
+ * update time : 2018.11.03
  */
 ;
 !(function (over, win, slf) {
     var Layx = {
-        version: '2.5.2',
+        version: '2.5.4',
         defaults: {
             id: '',
             icon: true,
@@ -1679,6 +1679,9 @@
                 delete that.windows[id];
                 that.windows[id] = _winform;
                 that.updateMinLayout();
+                if (document.body.classList.contains("ilayx-body")) {
+                    document.body.classList.remove('ilayx-body');
+                }
                 if (Utils.isFunction(winform.event.onmin.after)) {
                     winform.event.onmin.after(layxWindow, winform);
                 }
@@ -1846,7 +1849,9 @@
                     var html = layxWindow.querySelector("#layx-" + id + "-html");
                     if (html) {
                         var child = html.children[0];
-                        child.style.display = oldNodeInfo.display;
+                        if (child && child.style) {
+                            child.style.display = oldNodeInfo.display;
+                        }
                         if (oldNodeInfo.prev) {
                             setTimeout(function () {
                                 Utils.insertAfter(child, oldNodeInfo.prev);
@@ -1865,7 +1870,9 @@
                             var html = layxWindow.querySelector("#layx-" + id + "-" + frameId + "-html");
                             if (html) {
                                 var child = html.children[0];
-                                child.style.display = frameInfo.display;
+                                if (child && child.style) {
+                                    child.style.display = frameInfo.display;
+                                }
                                 if (frameInfo.prev) {
                                     setTimeout(function () {
                                         Utils.insertAfter(child, frameInfo.prev);
@@ -1882,6 +1889,9 @@
                 Layx.focusId = Layx.prevFocusId;
                 delete that.cloneStore[id];
                 delete that.windows[id];
+                if (document.body.classList.contains("ilayx-body")) {
+                    document.body.classList.remove('ilayx-body');
+                }
                 layxWindow.parentNode.removeChild(layxWindow);
                 if (layxShade) {
                     layxShade.parentNode.removeChild(layxShade);
@@ -2549,10 +2559,12 @@
         },
         insertAfter: function (newEl, targetEl) {
             var parentEl = targetEl.parentNode;
-            if (parentEl.lastChild == targetEl) {
-                parentEl.appendChild(newEl);
-            } else {
-                parentEl.insertBefore(newEl, targetEl.nextSibling);
+            if (newEl) {
+                if (parentEl.lastChild == targetEl) {
+                    parentEl.appendChild(newEl);
+                } else {
+                    parentEl.insertBefore(newEl, targetEl.nextSibling);
+                }
             }
         },
         innerArea: function () {
@@ -3024,12 +3036,14 @@
                 handle.winform.area.left = handle.layxWindow.offsetLeft;
                 handle.winform.area.width = handle.layxWindow.offsetWidth;
                 handle.winform.area.height = handle.layxWindow.offsetHeight;
-                Layx.storeWindowAreaInfo(handle.winform.id, {
-                    top: handle.winform.area.top,
-                    left: handle.winform.area.left,
-                    width: handle.winform.area.width,
-                    height: handle.winform.area.height
-                });
+                if (handle.winform.storeStatus === true) {
+                    Layx.storeWindowAreaInfo(handle.winform.id, {
+                        top: handle.winform.area.top,
+                        left: handle.winform.area.left,
+                        width: handle.winform.area.width,
+                        height: handle.winform.area.height
+                    });
+                }
                 if (Utils.isFunction(handle.winform.event.onresize.after)) {
                     handle.winform.event.onresize.after(handle.layxWindow, handle.winform);
                 }
@@ -3220,21 +3234,25 @@
                 LayxDrag.isFirstMoveing = true;
                 handle.winform.area.top = handle.layxWindow.offsetTop;
                 handle.winform.area.left = handle.layxWindow.offsetLeft;
-                Layx.storeWindowAreaInfo(handle.winform.id, {
-                    top: handle.winform.area.top,
-                    left: handle.winform.area.left,
-                    width: handle.winform.area.width,
-                    height: handle.winform.area.height
-                });
-                if (handle.winform.area.top === 0 && handle.winform.status === "normal" && handle.winform.maxable === true && handle.winform.resizable === true && handle.winform.dragInTopToMax === true) {
-                    handle.winform.area.top = handle.defaultArea.top;
-                    handle.winform.area.left = handle.defaultArea.left;
+                if (handle.winform.storeStatus === true) {
                     Layx.storeWindowAreaInfo(handle.winform.id, {
                         top: handle.winform.area.top,
                         left: handle.winform.area.left,
                         width: handle.winform.area.width,
                         height: handle.winform.area.height
                     });
+                }
+                if (handle.winform.area.top === 0 && handle.winform.status === "normal" && handle.winform.maxable === true && handle.winform.resizable === true && handle.winform.dragInTopToMax === true) {
+                    handle.winform.area.top = handle.defaultArea.top;
+                    handle.winform.area.left = handle.defaultArea.left;
+                    if (handle.winform.storeStatus === true) {
+                        Layx.storeWindowAreaInfo(handle.winform.id, {
+                            top: handle.winform.area.top,
+                            left: handle.winform.area.left,
+                            width: handle.winform.area.width,
+                            height: handle.winform.area.height
+                        });
+                    }
                     Layx.max(handle.winform.id);
                 }
                 if (Utils.isFunction(handle.winform.event.onmove.after)) {
